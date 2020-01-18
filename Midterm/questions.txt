@@ -1,0 +1,4 @@
+Question 8: show mongod --shardsvr as last assignment or mongo private IP:port number
+lauch three shards
+
+video 25:35 enable shard keys

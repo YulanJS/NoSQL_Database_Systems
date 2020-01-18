@@ -1,0 +1,4 @@
+Then get into the Shard Controller (27021) with command: 
+vagrant@vagrant-ubuntu-trusty-64:~$ mongo 127.0.0.1:27021 to setup chunk size
+with command:  use config => db.settings.save({_id:"chunksize",value:1})
+ 

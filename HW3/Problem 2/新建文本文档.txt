@@ -1,0 +1,44 @@
+vm1: 127.0.0.1:2200  192.168.1.73 port: 27017 on cmd window
+vm2: 127.0.0.1:2222  192.168.1.72 
+vm3: 127.0.0.1:2201  192.168.1.74
+
+In virtualbox, vm1 linux settings: change NAT to Host-only Adapter
+vm1: MAC 0800270ACEA8 
+vm2: MAC 08002702C861
+vm3: MAC 08002714831C
+
+mongo --host 192.168.1.66
+
+1. modify configuration of each of our mongodb instance
+configuration file located at /etc/mongodb.conf
+access VM to modify mongodb configuration
+sudo vi etc/mongod.conf
+(1) replication options (set a name for replica set)
+     replSet = myReplicaSet
+(2) bind_ip = change to inet address in eth1
+     modify bindIp to ip of the vm.
+restart mongodb
+
+change hostname:
+sudo hostname active1 
+
+show ip address
+hostname -i:
+
+sudo vim /etc/hosts
+127.0.0.1 localhost
+192.168.1.73 active1
+192.168.1.72 active2
+192.168.1.74 passive1
+
+sudo mkdir -p /db/active1/data
+sudo mkdir -p /db/active2/data
+sudo mkdir -p /db/passive1/data
+
+sudo mongod --port 27017 --dbpath /db/active1/data --replSet myReplicaSet --smallfiles --oplogSize 128 --bind_ip 192.168.1.73
+sudo mongod --port 27018 --dbpath /db/active2/data --replSet myReplicaSet --smallfiles --oplogSize 128 --bind_ip 192.168.1.72
+sudo mongod --port 27019 --dbpath /db/passive1/data --replSet myReplicaSet --smallfiles --oplogSize 128 --bind_ip 192.168.1.74
+
+mongo 192.168.1.73:27017
+mongo 192.168.1.72:27018
+mongo 192.168.1.74:27019

@@ -1,0 +1,9 @@
+Limit output to 10 documents.
+Arrange your output afterwards before submission.
+
+mongoimport --db users --collection contacts --file contacts.json
+sudo apt-get install html2text
+
+access mongo through cmd:  ssh -p 2222 vagrant@127.0.0.1 
+Password: vagrant 
+First open VM first, then type this on cmd.
